@@ -11,9 +11,15 @@ router.get('/login', UserLogin)
 
 //Food Router
 router.post('/add-food', UserAuthentication, AddFood);
-router.get('/read-food', UserAuthentication, ReadFood);
+router.get('/read-food',  ReadFood);
 router.put('/update-food/:id', UserAuthentication, UpdateFood);
 router.delete('/delete-food/:id', UserAuthentication, DeleteFood);
+
+
+//URL Test
+router.get('*', function (req, res) {
+    res.send('Hello World!');
+});
 
 
 
