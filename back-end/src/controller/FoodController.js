@@ -28,6 +28,18 @@ exports.ReadFood = async (req, res) => {
     
 }
 
+exports.ReadFoodbyID = async (req, res) => {
+
+    try {
+        const {id} = req.params;
+        const foodInfo = await FoodModel.findOne({_id:id});
+        res.json({status:'success', response:foodInfo})
+    } catch (error) {
+        res.json({status:'error', response: error.message});
+    }
+    
+}
+
 
 exports.UpdateFood = async (req, res) => {
 

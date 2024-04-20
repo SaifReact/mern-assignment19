@@ -26,6 +26,10 @@ exports.UserLogin = async (req, res) => {
 
     try {
         const {email, password} = req.body;
+        if(email==null && password==null){
+            return res.json({status:'warning', response: 'All fields are required'});
+        }
+
         const user = await UserModel.findOne({email:email});
         if (user==null){
             return res.json({status:'error', response: 'User not found'});
@@ -33,7 +37,7 @@ exports.UserLogin = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch){
-            return res.json({status:'error', response: 'Invalid password'});
+            return res.json({status:'warning', response: 'Invalid password'});
         }
 
         const token = jwt.sign({email: email}, 'foodappiExHusband', {
