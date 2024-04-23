@@ -5,48 +5,31 @@ body {
     box-sizing: content-box;
 }
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-  }
-  
-  .login-form {
-    justify-content: center;
-    width: 100%;
-    max-width: 400px; 
-    padding: 20px;
-    background-color: #f8f9fa; 
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-  }
 
-  .footer-container {
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin-top: 50px;
-  }
-  
-
-
-  .sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #f8f9fa !important;
-    padding-top: 20px;
-    z-index: 1000;
-    /* Ensure sidebar appears above content */
-    transition: all 0.3s ease;
-    padding-left: 15px;
+.navbar,
+.sidebar {
+    background-color: #f1f2f7;
 }
 
+.navbar a {
+    font-weight: 700;
+    color: #5a67ba !important;
+    font-size: 20px;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #5a67ba;
+    background-color: #e4e7f4;
+    border-radius: 10px;
+}
+
+hr {
+    background-color: #dee1f0;
+}
 
 .sidebar a {
-    padding: 10px;
     text-decoration: none;
     font-size: 18px;
     color: #a6abc8;
@@ -55,15 +38,10 @@ body {
 
 .sidebar a:hover {
     background-color: #e4e7f4;
-    color: #919ad1;
+    color: #5a67ba;
+    border-radius: 5px;
 }
 
-.content {
-    padding: 20px;
-    transition: margin-left 0.3s ease;
-}
-
-/* Food Card Styles */
 .food-card {
     margin-bottom: 20px;
 }
@@ -108,6 +86,32 @@ body {
 .btn-delete:hover {
     background-color: #ef4444 !important;
     color: #fee2e2 !important;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+}
+
+.btn-food {
+    background: #5A67BA !important;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-food:hover {
+    background: rgb(88, 99, 170) !important;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
 }
 
 .loader-container {

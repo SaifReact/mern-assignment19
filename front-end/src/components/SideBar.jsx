@@ -1,78 +1,28 @@
 import React from 'react';
-import { Navbar, Container, Button, Offcanvas } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
-import { isAuthenticated } from '../utility/Helper';
+import { Container, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 const SideBar = () => {
 
-    const [showSidebar, setShowSidebar] = React.useState(false);
-    const navigate = useNavigate();
-
-  const handleSidebarToggle = () => {
-    setShowSidebar(!showSidebar);
-  };
-
-  const handleLogout = () => {
-    console.log('Logging out...');
-    localStorage.removeItem('token');
-    !isAuthenticated && navigate('/');
-
-    // localStorage.removeItem('token');
-    // navigate('/'); 
-};
-
     return (
-        <>
-          <Navbar expand="md" bg="light" variant="light">
-        <Container fluid>
-          <Button className="me-2" variant="outline-secondary" onClick={handleSidebarToggle}>
-            <span className="navbar-toggler-icon" />
-          </Button>
-          {/* Logout button visible on mobile */}
-          <Button className="d-md-none" variant="outline-danger" onClick={handleLogout}>
-            Logout
-          </Button>
-        </Container>
-      </Navbar>
-
-      <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menu</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <nav className="nav flex-column">
-            <Link className="nav-link" to="/create">
-              <i className="bi bi-cart-dash-fill"></i> Create Food
-            </Link>
-            <Link className="nav-link" to="/">
-              <i className="bi bi-card-list"></i> All Foods
-            </Link>
-            {/* Logout link visible on mobile */}
-            <Button className="nav-link" onClick={handleLogout}>
-              <i className="bi bi-box-arrow-right"></i> Logout
-            </Button>
-          </nav>
-        </Offcanvas.Body>
-      </Offcanvas>
-
-      {/* Sidebar visible only on desktop */}
-      <div className="d-none d-md-block sidebar" id="sideberID">
-        <h2>Menu</h2>
-        <nav className="nav flex-column">
-          <Link className="nav-link" to="/create">
-            <i className="bi bi-cart-dash-fill"></i> Create Food
-          </Link>
-          <Link className="nav-link" to="/">
-            <i className="bi bi-card-list"></i> All Foods
-          </Link>
-          {/* Logout link visible only on desktop */}
-          <Link className="nav-link" onClick={handleLogout}>
-                <i className="bi bi-box-arrow-right"></i> Logout
-            </Link>
-        </nav>
-      </div>
-        </>
+      <div className={`sidebar min-vh-100 p-4`}>
+      <Container className="mx-3">
+        <p className="m-1 p-1 ps-2">Menu</p>
+        <Nav className="flex-column">
+          <Nav.Item>
+            <Nav.Link as={Link} to="/create" className="nav-link px-4 py-2 m-1">
+              <i className="bi bi-cart-dash-fill ps-2 me-2"></i>Create Food
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={Link} to="/" className="nav-link px-4 py-2 m-1">
+              <i className="bi bi-card-list ps-2 me-2"></i>All Foods
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Container>
+    </div>
     );
 };
 

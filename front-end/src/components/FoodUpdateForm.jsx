@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import {Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { token } from '../utility/Helper';
 import { useNavigate, useParams } from 'react-router-dom';
 import PrimaryLoader from '../loader/PrimaryLoader';
 
@@ -23,23 +22,18 @@ const FoodUpdateForm = () => {
       const UpdateToServer = async (event) => {
         event.preventDefault();
 
-        const formData = new FormData(event.target);
-        const formDataJSON = {};
-        formData.forEach((value, key) => {
-            formDataJSON[key] = value;
-        });
+        if(!foodInfo.foodName || !foodInfo.foodCode || !foodInfo.foodImg || !foodInfo.foodCategory || !foodInfo.foodQuantity || !foodInfo.foodPrice){
+          return toast.error('Please fill all fields', {position: "top-center"});
+        }
+
 
         try {
-          const response = await axios.put(`http://localhost:5050/api/v1/update-food/${id}`, formDataJSON, {
-            headers: {
-                token: token 
-            }
-        });
-         
-        toast(response.data.response);
-        if(response.data.status == 'success'){
-          navigate('/');
-        }
+          const response = await axios.put(`http://localhost:5050/api/v1/update-food/${id}`, foodInfo);
+
+          if(response.data.status == 'success'){
+            toast.success(response.data.response,{position: "top-center"})
+            navigate('/');
+          }
 
         } catch (error) {
           console.error('Error:', error);
@@ -49,13 +43,9 @@ const FoodUpdateForm = () => {
     
     const recieveData = async (id) => {
       try {
-          const response = await axios.get(`http://localhost:5050/api/v1/read-food/${id}`, {
-            headers: {
-                token: token 
-            }
-        });
-        setFoodInfo(response.data.response);
-        setLoader(false)
+          const response = await axios.get(`http://localhost:5050/api/v1/read-food/${id}`);
+          setFoodInfo(response.data.response);
+          setLoader(false)
       }catch (error) {
         console.error('Error:', error);
       }
@@ -67,63 +57,59 @@ const FoodUpdateForm = () => {
     }
 
     return (
-            <Container className="bg-white shadow-md rounded p-4">
-              <h1 className="text-dark font-weight-bold mb-4">Update Food Item</h1>
-              <ToastContainer />
-
+          <>
+           <ToastContainer />
               {loader ? (<PrimaryLoader />) : (
                 <Form onSubmit={UpdateToServer}>
                   <Row className="mb-3">
-                    <Col md={4}>
-                      <Form.Group controlId="foodName">
-                        <Form.Label>Food Name</Form.Label>
-                        <Form.Control type="text" name='foodName' placeholder="Enter Food Name" value={foodInfo.foodName} onChange={inputChange} />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group controlId="foodCode">
-                        <Form.Label>Food Code</Form.Label>
-                        <Form.Control type="text" name='foodCode' placeholder="Enter Food Code" value={foodInfo.foodCode} onChange={inputChange}  />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group controlId="foodImg">
-                        <Form.Label>Food Image URL</Form.Label>
-                        <Form.Control type="text" name='foodImg' placeholder="Enter Food Image URL" value={foodInfo.foodImg} onChange={inputChange}  />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row className="mb-3">
-                    <Col md={4}>
-                      <Form.Group controlId="foodCategory">
-                        <Form.Label>Food Category</Form.Label>
-                        <Form.Control type="text" name='foodCategory' placeholder="Enter Food Category" value={foodInfo.foodCategory} onChange={inputChange}  />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group controlId="foodQuantity">
-                        <Form.Label>Quantity</Form.Label>
-                        <Form.Control type="text" name='foodQuantity' placeholder="Enter Quantity" value={foodInfo.foodQuantity} onChange={inputChange}  />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group controlId="foodPrice">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" name='foodPrice' placeholder="Enter Price" value={foodInfo.foodPrice} onChange={inputChange}  />
-                      </Form.Group>
-                    </Col>
-                  </Row>
+                <Col md={4}>
+                  <Form.Group controlId="foodName">
+                    <Form.Label className="form-label">Food Name</Form.Label>
+                    <Form.Control value={foodInfo.foodName} onChange={inputChange} type="text" name='foodName' placeholder="Enter Food Name" />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group controlId="foodCode">
+                    <Form.Label className="form-label">Food Code</Form.Label>
+                    <Form.Control value={foodInfo.foodCode} onChange={inputChange} type="text" name='foodCode' placeholder="Enter Food Code" />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group controlId="foodImg">
+                    <Form.Label className="form-label">Food Image URL</Form.Label>
+                    <Form.Control value={foodInfo.foodImg} onChange={inputChange} type="text" name='foodImg' placeholder="Enter Food Image URL" />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={4}>
+                  <Form.Group controlId="foodCategory">
+                    <Form.Label className="form-label">Food Category</Form.Label>
+                    <Form.Control value={foodInfo.foodCategory} onChange={inputChange} type="text" name='foodCategory' placeholder="Enter Food Category" />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group controlId="foodQuantity">
+                    <Form.Label className="form-label">Quantity</Form.Label>
+                    <Form.Control value={foodInfo.foodQuantity} onChange={inputChange} type="text" name='foodQuantity' placeholder="Enter Quantity" />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group controlId="foodPrice">
+                    <Form.Label className="form-label">Price</Form.Label>
+                    <Form.Control value={foodInfo.foodPrice} onChange={inputChange} type="text" name='foodPrice' placeholder="Enter Price" />
+                  </Form.Group>
+                </Col>
+              </Row>
                   <div className="d-flex">
-                    <Button variant="primary" type="submit">
-                      Submit
-                    </Button>
+                  <button className=' btn-food' type="submit">
+                      Update
+                    </button>
                   </div>
                 </Form>
               )}
-              
-            
-            </Container>
-        
+ 
+ </>
     );
 };
 
